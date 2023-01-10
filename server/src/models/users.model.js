@@ -1,4 +1,7 @@
-module.exports = (sequelize, Sequelize) => {
+const Sequelize = require('sequelize');
+const db = require('../config/database.js');
+
+const users = (sequelize, Sequelize) => {
     const users = sequelize.define("tutorial", {
       name:{
         type:Sequelize.STRING
@@ -16,6 +19,9 @@ module.exports = (sequelize, Sequelize) => {
         type:"TIMESTAMP"
       }
     });
-  
-    return users;
-  };
+};
+
+// users.sync().then(() => {
+//   console.log('table created');
+// });
+module.exports = users;
