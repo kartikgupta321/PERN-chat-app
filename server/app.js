@@ -3,10 +3,9 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const path = require('path');
 const db = require('./src/config/database.js');
-// const users = require('./src/models/users.model');
 const router = require('./src/routes/users');
-
 const app = express();
+app.use(express.json());
 
 //   test db
 async function authenticate(){
@@ -19,18 +18,11 @@ async function authenticate(){
 };
 authenticate();
 
-// Handlebars
-// app.engine('handlebars', exphbs.engine({ defaultLayout: 'main' }));
-// app.set('view engine', 'handlebars');
-
 // Index route
-app.get('/', (req, res) => res.send('index'));
 
-// app.get('/users', (req,res)=>{
-//     console.log('users');
-//     res.send('users');
-// });
-app.get('/users', router);
+app.use(router);
+
+app.get('/', (req, res) => res.send('index'));
 
 const PORT = process.env.PORT || 5000;
 

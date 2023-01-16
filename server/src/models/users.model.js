@@ -1,8 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database.js');
 
-const users = (sequelize, Sequelize) => {
-    const users = sequelize.define("tutorial", {
+const user = db.define("users", {
       name:{
         type:Sequelize.STRING
       },
@@ -12,16 +11,12 @@ const users = (sequelize, Sequelize) => {
       password:{
         type:Sequelize.STRING
       },
-      phoneNo:{
+      phoneNumber:{
         type:Sequelize.STRING
       },
       deletedAt:{
         type:"TIMESTAMP"
       }
     });
-};
 
-// users.sync().then(() => {
-//   console.log('table created');
-// });
-module.exports = users;
+module.exports = user;
