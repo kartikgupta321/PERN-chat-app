@@ -11,17 +11,20 @@ router.post('/signup', async (req,res)=>{
         if(user != null){
             res.json('email must be unique')
         }
-        user = await users.findOne({ where: { phoneNumber: phoneNumber } });
-        if(user != null){
-            res.json('password must be unique')
-        }
-        users.create({
-            name: name,
-            email: email,
-            password : password,
-            phoneNumber : phoneNumber
-        });
+        else {
+            user = await users.findOne({ where: { phoneNumber: phoneNumber } });
+            if(user != null){
+                res.json('phoneNumber must be unique')
+            }
+            else{users.create({
+                name: name,
+                email: email,
+                password : password,
+                phoneNumber : phoneNumber
+            });
         res.json("User Registered");
+            }
+        }
     } catch (error) {
         console.error(error.message);
     }

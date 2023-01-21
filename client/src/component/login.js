@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
 import "./login.css";
+import axios from 'axios';
+import { useState } from 'react';
 
-class Signin extends Component{
-    render(){
-        return(
-            <div className='login'>
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        console.log(email);
+    }
+  return (
+    <div className='login'>
                 <h4>Login</h4>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className='text_area'>
                         <input
                             type='text'
@@ -26,8 +32,8 @@ class Signin extends Component{
                         />
                     </div>
                     <div>
-                        <input
-                        type= 'submit'
+                        <button
+                        type= "submit"
                         value = 'LOGIN'
                         className="btn"
                         />
@@ -35,8 +41,5 @@ class Signin extends Component{
                 </form>
                     <a className='link' href='/signup'>Sign up</a>
             </div>
-        )
-    }
+  )
 }
-
-export default Signin;
