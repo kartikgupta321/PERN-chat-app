@@ -1,25 +1,20 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database.js');
 
-const user = db.define("users", {
-      name:{
+const message = db.define("messages", {
+      message:{
         type:Sequelize.STRING,
         allowNull : false
       },
-      email:{
+      senderId:{
         type:Sequelize.STRING,
         allowNull : false,
-        unique : true,
         isEmail : true
       },
-      password:{
+      receiverId:{
         type:Sequelize.STRING,
-        allowNull : false
-      },
-      phoneNumber:{
-        type:Sequelize.STRING,
-        unique : true,
-        allowNull : false
+        allowNull : false,
+        isEmail : true
       },
       deletedAt:{
         type:"TIMESTAMP"
@@ -29,4 +24,4 @@ const user = db.define("users", {
   await db.sync();
 })();
 
-module.exports = user;
+module.exports = message;

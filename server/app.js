@@ -1,11 +1,18 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser');
-const path = require('path');
 const db = require('./src/config/database.js');
 const router = require('./src/routes/users');
 const app = express();
 app.use(express.json());
+
+const cors = require("cors")
+app.options("*", cors())
+
+const corsOptions = {
+  origin:"http://localhost:3000"
+}
+
+app.use(cors(corsOptions))
+
 
 //   test db
 async function authenticate(){

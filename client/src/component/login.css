@@ -1,13 +1,13 @@
 body{
     background: linear-gradient(135deg, #1B8AF1, #B58DED);
-    height: 100vh;
+    height: 95.3vh;
     width: 100%;
     text-align: center;
 }
 h4{
     font-family: 'Segoe UI', bold;
     font-size: 35px;
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
 }
 form{
