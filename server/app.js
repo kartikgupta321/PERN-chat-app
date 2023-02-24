@@ -13,7 +13,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-
 //   test db
 async function authenticate(){
     try {

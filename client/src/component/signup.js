@@ -83,6 +83,10 @@ export default function Signup() {
                         />
                     </div>
                 </form>
+                <br></br>
+                <br></br>
+                <br></br>
+                <a className='link' href='/login' >Log in</a>
             </div>
   )
 }

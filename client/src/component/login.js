@@ -1,11 +1,13 @@
-import React, {Component} from 'react';
+import React,{ useState,Component} from 'react';
 import "./login.css";
 import axios from 'axios';
-import { useState } from 'react';
+
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [User,setUser] = useState(null);
 
     const handleSubmit= async (event)=>{
         event.preventDefault();
@@ -13,9 +15,12 @@ export default function Login() {
             axios.post(`http://localhost:5000/login`,{
                 email:email,
                 password:password
-            });
+            }).then(res => {setUser(res.data);console.log(res.data)})
+            console.log('user = ',User);
             localStorage.setItem('pernToken',email);
+            window.location = "/";
             window.location.reload();
+
         } catch (error) {
             alert(error);
         }

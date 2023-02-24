@@ -4,47 +4,38 @@ import { Tab, Nav, Modal } from 'react-bootstrap'
 import axios from 'axios';
 import { useEffect,useState } from 'react';
 
-export default function Sidebar() {
+export default function Sidebar({receiver,setReceiver}) {
     const [contacts,setContacts] = useState([]);
-    
+ 
+    const [bgcolor,setBgcolor] = useState('rgb(40,40,40)');
+
     useEffect(()=>{
         const getContacts = async()=>{
             try {
-                const response = await axios.get(`http://localhost:5000/contacts`)
+                const email = localStorage.getItem('pernToken');
+                await axios.get(`http://localhost:5000/contacts`,{email:email})
                 .then((response)=> setContacts(...contacts,response.data));
             } catch (error) {
                 console.log(error)
-            }
-            finally{
             }
         }
         getContacts()
     },[])
 
   return (
-    <div style={{height:'100vh',backgroundColor:'rgb(40,40,40)', width: '250px',color:'white' }} className="d-flex flex-column">
-    <Tab.Container >
-      <Nav variant="tabs" className="justify-content-center ">
-        <Nav.Item style={{backgroundColor:'rgb(40,40,40)'}}>
+  <div style={{float:"left" ,backgroundColor:"rgb(40,40,40)",height:'100vh' , width: '30%', color:'white' }} className="d-flex flex-column">
           <div style={{border:'0px',backgroundColor:'rgb(40,40,40)',
           color:'white'}}>Chats</div>
-        </Nav.Item>
-      </Nav>
-      <Tab.Content className=" overflow-auto flex-grow-1">
-        <Tab.Pane>
+          <br></br>
         <div>
-           <ListGroup variant="flush" style={{ width: '250px',color:'white' }}className="d-flex flex-column">
-            {contacts.map(contact => (
-            <ListGroup.Item key={contact.name}>
+           <ListGroup >
+            {contacts.map((contact,index) => (
+            <ListGroup.Item onClick={()=>{setReceiver(contact)}} action variant="primary" key={index} style={{backgroundColor:'rgb(40,40,40)',color:'white',border:'0px'}}>
                 {contact.name}
             </ListGroup.Item>
             ))}
             </ListGroup>
         </div>
-        </Tab.Pane>
-      </Tab.Content>
-    </Tab.Container>
   </div>
-    
   )
 }

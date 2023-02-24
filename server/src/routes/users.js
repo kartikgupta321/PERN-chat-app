@@ -6,7 +6,7 @@ var router = express.Router();
 router.post('/signup', async (req,res)=>{
     try {
         const {email,password,name,phoneNumber} = req.body;
-        user = await users.findOne({ where: { email: email } });
+        let user = await users.findOne({ where: { email: email } });
         if(user != null){
             res.json('email must be unique')
         }
@@ -33,15 +33,12 @@ router.post('/login', async (req,res)=>{
         const {email,password} = req.body;
         const user = await users.findOne({ where: { email: email } });
         if (user === null) {
-            console.log("not registered");
             res.json('Not registered');
         }
         else if(user.password == password){
-            console.log("logged in");
-            res.json('logged in');
+            res.json(user.id);
         }
         else{
-            console.log("wrong password");
             res.json('wrong password');
         }
     } catch (error) {
@@ -51,8 +48,12 @@ router.post('/login', async (req,res)=>{
 router.get('/contacts',async (req,res)=>{
     let contacts
     try {
+        const {email,name} = req.body;
         contacts = await users.findAll({
-            attributes: ['name']
+            // attributes: ['name'],
+            where: {
+
+            }
           });
     } catch (error) {
         console.log(error.message);
@@ -72,16 +73,17 @@ router.post('/messages', async (req,res)=>{
         console.log(error.message);
     }
 })
-router.get('/getMessage',async (req,res)=>{
+router.post('/getMessage',async (req,res)=>{
     try {
         const {senderId,receiverId} = req.body;
-        message = await messages.findAll({
+        const message = await messages.findAll({
+            attributes :['message'],
             where: {
                 senderId : senderId,
                 receiverId : receiverId
               }
           });
-        res.json(message);
+        res.send(JSON.stringify(message));
     } catch (error) {
         console.log(error.message);
     }
