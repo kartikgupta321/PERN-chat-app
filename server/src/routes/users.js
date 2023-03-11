@@ -2,13 +2,15 @@ const express = require('express');
 const users = require('../models/users.model');
 const messages = require('../models/messages.model');
 var router = express.Router();
+const { Op } = require("sequelize");
+
 
 router.post('/signup', async (req,res)=>{
     try {
         const {email,password,name,phoneNumber} = req.body;
         let user = await users.findOne({ where: { email: email } });
         if(user != null){
-            res.json('email must be unique')
+            res.json('email must be unique');
         }
         else {
             user = await users.findOne({ where: { phoneNumber: phoneNumber } });
@@ -34,6 +36,7 @@ router.post('/login', async (req,res)=>{
         const user = await users.findOne({ where: { email: email } });
         if (user === null) {
             res.json('Not registered');
+            alert('user not registered');
         }
         else if(user.password == password){
             res.json(user.id);
@@ -45,14 +48,15 @@ router.post('/login', async (req,res)=>{
         console.error(error.message);
     }
 })
-router.get('/contacts',async (req,res)=>{
+router.post('/contacts',async (req,res)=>{
     let contacts
     try {
-        const {email,name} = req.body;
+        const {email} = req.body;
         contacts = await users.findAll({
-            // attributes: ['name'],
             where: {
-
+                email:{
+                    [Op.ne]:email
+                }
             }
           });
     } catch (error) {
@@ -75,14 +79,25 @@ router.post('/messages', async (req,res)=>{
 })
 router.post('/getMessage',async (req,res)=>{
     try {
+
         const {senderId,receiverId} = req.body;
         const message = await messages.findAll({
-            attributes :['message'],
+            attributes :['message','senderId','receiverId',
+            'createdAt',
+        ],
             where: {
-                senderId : senderId,
-                receiverId : receiverId
+                [Op.or]: [{
+                    senderId : senderId,
+                    receiverId : receiverId 
+                    },
+                    { 
+                    senderId : receiverId,
+                    receiverId :  senderId
+                    }
+                ]
               }
           });
+        //   res.json(message);
         res.send(JSON.stringify(message));
     } catch (error) {
         console.log(error.message);
