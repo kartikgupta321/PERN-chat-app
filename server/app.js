@@ -2,6 +2,21 @@ const express = require('express');
 const db = require('./src/config/database.js');
 const router = require('./src/routes/users');
 const app = express();
+
+
+const io = require("socket.io")(5001,{
+    cors:{
+        origin: ["http://localhost:3000"],
+    },
+})
+io.on("connection", socket =>{
+    console.log(socket.id);
+    socket.on('send-message',(message)=>{
+        socket.broadcast.emit('receive-msg',message);
+        console.log(message);
+    })
+})
+
 app.use(express.json());
 
 const cors = require("cors")
@@ -12,7 +27,6 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-
 
 //   test db
 async function authenticate(){

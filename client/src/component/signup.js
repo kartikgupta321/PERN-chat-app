@@ -28,10 +28,10 @@ export default function Signup() {
         }
     }
   return (
-    <div className='login'>
-                <h4>Signup</h4>
+    <div className='login' style={{margin:'5% 33% 5% 33%'}}>
+                <h4 style={{margin:'8% 33% 5% 40%'}}>Signup</h4>
                 <form onSubmit={handleSubmit}>
-                    <div className='text_area'>
+                    <div style={{margin:'8% 33% 8% 11%'}} className='text_area'>
                         <input
                             type='text'
                             id='username'
@@ -42,7 +42,7 @@ export default function Signup() {
                             className = 'text_input'
                         />
                     </div>
-                    <div className='text_area'>
+                    <div style={{margin:'8% 33% 8% 11%'}} className='text_area'>
                         <input
                             type= 'text'
                             id = 'password'
@@ -53,7 +53,7 @@ export default function Signup() {
                             className = 'text_input'
                         />
                     </div>
-                    <div className='text_area'>
+                    <div style={{margin:'8% 33% 8% 11%'}} className='text_area'>
                         <input
                             type= 'password'
                             id = 'password'
@@ -64,7 +64,7 @@ export default function Signup() {
                             className = 'text_input'
                         />
                     </div>
-                    <div className='text_area'>
+                    <div style={{margin:'8% 33% 2% 11%'}} className='text_area'>
                         <input
                             type= 'text'
                             id = 'password'
@@ -75,7 +75,7 @@ export default function Signup() {
                             className = 'text_input'
                         />
                     </div>
-                    <div >
+                    <div style={{margin:'0% 33% 8% 35%'}} >
                         <input 
                         type= 'submit'
                         value = 'Signup'
@@ -83,6 +83,10 @@ export default function Signup() {
                         />
                     </div>
                 </form>
+                <br></br>
+                <br></br>
+                <br></br>
+                <a style={{margin:'0% 33% 5% 44%'}} className='link' href='/login' >Log in</a>
             </div>
   )
 }

@@ -2,13 +2,15 @@ const express = require('express');
 const users = require('../models/users.model');
 const messages = require('../models/messages.model');
 var router = express.Router();
+const { Op } = require("sequelize");
+
 
 router.post('/signup', async (req,res)=>{
     try {
         const {email,password,name,phoneNumber} = req.body;
-        user = await users.findOne({ where: { email: email } });
+        let user = await users.findOne({ where: { email: email } });
         if(user != null){
-            res.json('email must be unique')
+            res.json('email must be unique');
         }
         else {
             user = await users.findOne({ where: { phoneNumber: phoneNumber } });
@@ -33,26 +35,29 @@ router.post('/login', async (req,res)=>{
         const {email,password} = req.body;
         const user = await users.findOne({ where: { email: email } });
         if (user === null) {
-            console.log("not registered");
             res.json('Not registered');
+            alert('user not registered');
         }
         else if(user.password == password){
-            console.log("logged in");
-            res.json('logged in');
+            res.send("logged in");
         }
         else{
-            console.log("wrong password");
             res.json('wrong password');
         }
     } catch (error) {
         console.error(error.message);
     }
 })
-router.get('/contacts',async (req,res)=>{
+router.post('/contacts',async (req,res)=>{
     let contacts
     try {
+        const {email} = req.body;
         contacts = await users.findAll({
-            attributes: ['name']
+            where: {
+                email:{
+                    [Op.ne]:email
+                }
+            }
           });
     } catch (error) {
         console.log(error.message);
@@ -72,16 +77,28 @@ router.post('/messages', async (req,res)=>{
         console.log(error.message);
     }
 })
-router.get('/getMessage',async (req,res)=>{
+router.post('/getMessage',async (req,res)=>{
     try {
+
         const {senderId,receiverId} = req.body;
-        message = await messages.findAll({
+        const message = await messages.findAll({
+            attributes :['message','senderId','receiverId',
+            'createdAt',
+        ],
             where: {
-                senderId : senderId,
-                receiverId : receiverId
+                [Op.or]: [{
+                    senderId : senderId,
+                    receiverId : receiverId 
+                    },
+                    { 
+                    senderId : receiverId,
+                    receiverId :  senderId
+                    }
+                ]
               }
           });
-        res.json(message);
+        //   res.json(message);
+        res.send(JSON.stringify(message));
     } catch (error) {
         console.log(error.message);
     }
