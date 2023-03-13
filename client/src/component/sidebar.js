@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 export default function Sidebar({ receiver, setReceiver }) {
     const [contacts, setContacts] = useState([]);
-    const [bgcolor,setBgcolor] = useState('rgb(40,40,40)')
     const [activeIndex,setActiveIndex] = useState();
 
     const logout = async (event) => {
@@ -26,13 +25,13 @@ export default function Sidebar({ receiver, setReceiver }) {
     }, [])
 
     return (
-        <div style={{ float: "left", backgroundColor: "rgb(40,40,40)", position: 'fixed', height: '100vh', width: '30%', color: 'white' }} className="d-flex flex-column">
+        <div style={{ float: "left", backgroundColor: "rgb(40,40,40)", position: 'fixed', height: '100%', width: '30%', color: 'white' }} className="d-flex flex-column">
             <div style={{
                 height: '5%', border: '0px', backgroundColor: 'rgb(40,40,40)',
                 color: 'white', padding: '20px 20px 20px 20px', fontSize: 'x-large'
             }}>Chats</div>
             <br></br>
-            <div style={{ height: '200px',overflowY:'auto' }}>
+            <div style={{ height: '80%',overflowY:'auto' }}>
                 <ListGroup >
                     {contacts.map((contact, index) => (
                         <ListGroup.Item onClick={() => { setReceiver(contact);setActiveIndex(index) }} key={index} style={{backgroundColor: index===activeIndex ? 'rgb(56,56,56)' : 'rgb(40,40,40)',color:'white',border: '0.5px solid black', fontSize: 'large' }}>

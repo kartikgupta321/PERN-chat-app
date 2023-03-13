@@ -39,7 +39,7 @@ router.post('/login', async (req,res)=>{
             alert('user not registered');
         }
         else if(user.password == password){
-            res.json(user.id);
+            res.send("logged in");
         }
         else{
             res.json('wrong password');

@@ -6,8 +6,6 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [User,setUser] = useState(null);
-
     const handleSubmit= async (event)=>{
         event.preventDefault();
         try {
@@ -17,12 +15,16 @@ export default function Login() {
             if(password===''){
                 alert('enter password');
             }
-            await axios.post(`http://localhost:5000/login`,{
+            const res = await axios.post(`http://localhost:5000/login`,{
                 email:email,
                 password:password
-            }).then(res => {setUser(res.data);console.log(res.data)})
-            localStorage.setItem('pernToken',email);
-            window.location = "/";
+            })
+            if(res.data ==='logged in'){
+                localStorage.setItem('pernToken',email);
+                window.location = "/";
+            }
+            else{alert('invalid credentials');}
+            
         } catch (error) {
             alert(error);
         }
