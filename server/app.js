@@ -3,7 +3,6 @@ const db = require('./src/config/database.js');
 const router = require('./src/routes/users');
 const app = express();
 
-
 const io = require("socket.io")(5001,{
     cors:{
         origin: ["http://localhost:3000"],
