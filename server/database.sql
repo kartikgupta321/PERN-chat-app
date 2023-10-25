@@ -20,8 +20,8 @@ CREATE TABLE messages(
     "deletedAt" TIMESTAMP(0)
 );
 
-INSERT into Users(name,Email,Password,Phone_No,createdAt) 
+INSERT into Users(name,Email,Password,phoneNumber,createdAt) 
     values("kartik","kartik@gmail.com","2505","9068457747",NOW());
 
-INSERT into mess("message","senderId","receiverId","createdAt") 
-    values('initial messag','kartik@gmail.com','dikshit@gmail.com',NOW());
+INSERT into messages("message","senderId","receiverId","createdAt") 
+    values('initial message','kartik@gmail.com','dikshit@gmail.com',NOW());
