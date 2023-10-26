@@ -3,6 +3,7 @@ import "./login.css";
 import axios from 'axios';
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import { backendPath } from '../config/config';
 
 export default function Signup() {
     const [name, setName] = useState("");
@@ -15,7 +16,7 @@ export default function Signup() {
         event.preventDefault();
         
         try {
-            axios.post(`http://localhost:5000/signup`,{
+            axios.post(`${backendPath}/signup`,{
                 name:name,
                 email:email,
                 password:password,

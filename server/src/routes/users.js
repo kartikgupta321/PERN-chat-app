@@ -81,7 +81,6 @@ router.post('/messages', async (req, res) => {
 })
 router.post('/getMessage', async (req, res) => {
     try {
-
         const { senderId, receiverId } = req.body;
         const message = await messages.findAll({
             attributes: ['message', 'senderId', 'receiverId',

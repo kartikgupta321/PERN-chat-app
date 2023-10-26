@@ -3,7 +3,7 @@ import "./login.css";
 import axios from 'axios';
 import { GoogleLogin } from '@react-oauth/google';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import { backendPath } from '../config/config';
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -18,7 +18,7 @@ export default function Login() {
             if (password === '') {
                 alert('enter password');
             }
-            const res = await axios.post(`http://localhost:5000/login`, {
+            const res = await axios.post(`${backendPath}/login`, {
                 email: email,
                 password: password
             })
@@ -71,7 +71,7 @@ export default function Login() {
                     <GoogleLogin 
                         onSuccess={credentialResponse => {
                             console.log(credentialResponse.credential);
-                            axios.post(`http://localhost:5000/google`, { credential: credentialResponse })
+                            axios.post(`${backendPath}/google`, { credential: credentialResponse })
                         }}
                         onError={() => {
                             console.log('Login Failed');
