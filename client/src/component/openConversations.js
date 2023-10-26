@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Form, InputGroup, Button } from 'react-bootstrap'
 import imageUrl from '../image/img.png';
 import { io } from "socket.io-client";
+import { backendPath } from '../config/config';
+
 const moment = require('moment');
 
 const socket = io("http://localhost:5001");
@@ -21,7 +23,7 @@ export default function OpenConversations({ receiver, setReceiver }) {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.post(`http://localhost:5000/messages`, {
+            await axios.post(`${backendPath}/messages`, {
                 message: text,
                 senderId: localStorage.getItem('pernToken'),
                 receiverId: receiver.email
@@ -36,11 +38,11 @@ export default function OpenConversations({ receiver, setReceiver }) {
     const getMessage = async () => {
         try {
             const email = localStorage.getItem('pernToken');
-            // await axios.post('http://localhost:5000/getMessage',{
+            // await axios.post(`${backendPath}/getMessage`,{
             //   senderId : email,
             //   receiverId : receiver.email
             // }).then((response) => setMessages(...messages,response.data));
-            const msg = await axios.post('http://localhost:5000/getMessage', {
+            const msg = await axios.post(`${backendPath}/getMessage`, {
                 senderId: email,
                 receiverId: receiver.email
             });

@@ -2,6 +2,7 @@ import React from 'react'
 import { ListGroup } from 'react-bootstrap'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { backendPath } from '../config/config';
 
 export default function Sidebar({ receiver, setReceiver }) {
     const [contacts, setContacts] = useState([]);
@@ -14,7 +15,7 @@ export default function Sidebar({ receiver, setReceiver }) {
     useEffect(() => {
         const getContacts = async () => {
             try {
-                await axios.post(`http://localhost:5000/contacts`, { 
+                await axios.post(`${backendPath}/contacts`, { 
                     email: localStorage.getItem('pernToken') 
                 }).then(response => setContacts(...contacts, response.data));
             } catch (error) {

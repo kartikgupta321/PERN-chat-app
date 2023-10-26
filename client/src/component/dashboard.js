@@ -3,8 +3,6 @@ import "./login.css";
 import Sidebar from './sidebar';
 import OpenConversations from './openConversations';
 
-// const wow = useContext();
-
 export default function Dashboard() {
     const [receiver,setReceiver] = useState([]);
 
